@@ -1,0 +1,316 @@
+@import 'color';
+@import 'mixin';
+
+//Global settings
+
+* {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    font-family: "微軟正黑體";
+}
+
+table {
+    border-collapse: collapse;
+
+}
+
+
+//Header
+
+.header--fullwidth {
+    width: 100%;
+    background: $btn-color;
+}
+
+.header__container {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+    padding: 67px 0;
+    max-width: 1024px;
+}
+
+.header__container__col-4 {
+    padding: 0 50px;
+}
+
+.header__container__col-4__tall, .header__container__col-4__weight {
+    margin-bottom: 23px;
+    >label {
+        display: inline-block;
+        padding-bottom: 7px;
+        font-size: 1.125rem;
+        color: $brand-color;
+    }
+}
+
+#tall, #weight {
+    padding: 5px 10px;
+    font-size: 1.5rem;
+    color: rgba(255,255,255,0.50);
+    background-color: rgba(255,255,255,0.18);
+    border: 2px solid $brand-color;
+    border-radius: 10px;
+    &:focus {
+        border: 2px solid $input-focus;
+    }
+}
+
+.header__container__col-4__resultBtn {
+    display: inline-block;
+    width: 120px;
+    height: 120px;
+    background-color: $brand-color;
+    border: 0px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 1.5rem;
+    color:$btn-color;
+    @include hoverEffect;
+    &:hover {
+        box-shadow: 3px 3px 5px 3px black;
+        background-color: $click-color;
+    }
+}
+
+.header__container__col-4__afterBtn {
+    display: inline-block;
+    width: 120px;
+    height: 120px;
+    position: relative;
+    background-color: transparent;
+    border-radius: 50%;
+    font-size: 2rem;
+    text-align: center;
+    text-transform: uppercase;
+    p {
+        margin: 0;
+        &:first-child{
+            margin-top: 25px;
+        }
+        &:nth-child(2) {
+            font-size: 0.875rem;
+        }
+        &:nth-child(3) {
+            position: absolute;
+            left: 70px;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+        }
+        &:nth-child(4) {
+            position: absolute;
+            left: 120px;
+            bottom: 40px;
+            width: 130px;
+            text-align: left;
+        }
+    }
+    a {
+        display: inline-block;
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+        // transition: transform 2s;
+        transition: background-color .3s linear;
+        &:hover {
+            background-color:#eee;
+            // transform: rotate(360deg);
+            //*問題點1 使用此變化，右邊的字體看似有變化，但我重複試驗後還是不知道哪裡有問題
+        }
+    }
+}
+
+//Content for history
+
+.content--gray {
+    max-width: 100%;
+    background-color: $content-background;
+}
+
+.content__container {
+    max-width: 624px;
+    padding: 30px;
+    margin: 0 auto;
+    text-align:center;
+}
+
+.content__title {
+    max-width: 100%;
+    margin: 0 0 36px 0;
+    font-size: 1.5rem;
+    text-transform: uppercase;
+    color: $btn-color;
+}
+
+.bmiHistory {
+    padding: 0;
+    table {
+        position: relative;
+        width: 100%;
+        background-color: $color-hover;
+    }
+
+    td {
+        width: 20%;
+        padding: 21px 0;
+        @include hoverEffect;
+        //Sass mixin is case sensitive
+        &:hover {
+            background-color: $button-hover;
+            color: $color-hover;
+        }
+    }
+
+    li {
+        margin-bottom: 16px;
+        list-style-type: none;
+    }
+    small {
+        &::after {
+            content: ' ';
+            padding-right: 2px;
+        }
+    }
+
+.bmiHistory_delete {
+        position: absolute;
+        top: -10px;
+        right: -15px;
+        padding: 0;
+        width: 30px;
+        height: 30px;
+        background-color: $button-background;
+        border-radius: 50%;
+        @include hoverEffect;
+        &:hover {
+            background-color: $button-hover;
+        }
+        a { 
+            display: inline-block;
+            width: 30px;
+            height: 30px;
+            font-size: 1.5rem;
+            text-decoration: none;
+            color: #444;
+            &:hover {
+                color: $color-hover;
+            }
+        }
+    }
+    
+}
+
+//a for clear history
+
+#clearHistory {
+    a {
+        display: inline-block;
+        width: 120px;
+        line-height:40px;
+        background-color: $button-background;
+        text-decoration: none;
+        color: #444;
+        border-radius: 10px;
+        box-shadow: 3px 3px 2px 2px rgba(0,0,0,0.2);
+        @include hoverEffect;
+        &:hover {
+            color: $color-hover;
+            background-color: $button-hover;
+        }
+    }
+}
+
+//Border line for table
+
+.health {
+    @include borderLeft ($health);
+    &.fullBorder {
+        @include borderFull ($health);
+        p:nth-child(3) {
+            background-color: $health;
+        }
+    }
+}
+
+.light {
+    @include borderLeft ($light);
+    &.fullBorder {
+        @include borderFull ($light);
+        p:nth-child(3) {
+            background-color: $light;
+        }
+    }
+}
+
+.overWeight {
+    @include borderLeft ($overWeight);
+    &.fullBorder {
+        @include borderFull ($overWeight);
+        p:nth-child(3) {
+            background-color: $overWeight;
+        }
+    }
+}
+
+.obese {
+    @include borderLeft ($obese);
+    &.fullBorder {
+        @include borderFull ($obese);
+        p:nth-child(3) {
+            background-color: $obese;
+        }
+    }
+}
+
+.midObese {
+    @include borderLeft ($obese);
+    &.fullBorder {
+        @include borderFull ($obese);
+        p:nth-child(3) {
+            background-color: $obese;
+        }
+    }
+}
+
+.overObese {
+    @include borderLeft ($overObese);
+    &.fullBorder {
+        @include borderFull ($overObese);
+        p:nth-child(3) {
+            background-color: $overObese;
+        }
+    }
+}
+
+
+
+//Footer
+
+.footer--full-width {
+    max-width: 100%;
+    background-color: $brand-color;
+}
+
+.footer__container {
+    padding: 18px 0;
+    text-align: center;
+}
+
+.footer__img {
+    display: inline-block;
+    width: 55px;
+    height: 55px;
+}
+
+
+//media querires, usually put on last
+
+.header__container {
+    @include tablet {
+        flex-flow: column wrap;
+    }
+}

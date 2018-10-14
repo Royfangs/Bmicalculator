@@ -1,0 +1,19 @@
+@mixin tablet {
+    @media screen and (max-width: 768px){
+    @content;
+    //@content for adding up more properties
+    }
+}
+
+@mixin hoverEffect {
+    transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
+}
+
+@mixin borderLeft ($color) {
+    border-left: 7px solid $color;
+}
+
+@mixin borderFull ($color) {
+    border: 7px solid $color;
+    color: $color;
+}

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>BMIcalculator</title>
+    <link rel="stylesheet" href="css/Normalize.css">
+    <link rel="stylesheet" href="css/all.css">
+</head>
+<body>
+    <header id="header" class="header--fullwidth">
+        <div class="header__container">
+            <div class="header__container__col-4">
+                <img src="img/BMICLogo.png" alt="BMIlogo">
+            </div>
+            <div class="header__container__col-4">
+                <div class="header__container__col-4__tall">
+                    <label for="tall">身高<small>cm</small></label>
+                    <br>
+                    <input type="text" id="tall" name="tall" placeholder="請輸入身高" required>
+                </div>
+                <div class="header__container__col-4__weight">
+                    <label for="weight">體重<small>kg</small></label>
+                    <br>
+                    <input type="text" id="weight" name="weight" placeholder="請輸入體重" required>
+                </div>
+            </div>
+            <div id="headerButton" class="header__container__col-4">
+                <input type="button" id="checkbmi" class="header__container__col-4__resultBtn" value="看結果">
+                <!-- <div class="header__container__col-4__afterBtn health fullBorder">
+                    <p>16.62</p>
+                    <p>bmi</p>
+                    <p><a href="#">
+                        <img src="img/icons_loop.png" alt="loop">
+                    </a></p>
+                    <p>理想</p>
+                </div>
+            </div> -->
+        </div>
+    </header>
+
+    <div class="content content--gray">
+        <div class="content__container">
+            <h2 class="content__title">bmi紀錄</h2>
+            <ul class="bmiHistory">
+                <!-- <li>
+                    <table>
+                        <tr>
+                            <td>理想</td>
+                            <td><small>bmi</small>24.69</td>
+                            <td><small>weight</small>80kg</td>
+                            <td><small>height</small>180cm</td>
+                            <td><small>10-10-2018</small></td>
+                            <td class="bmiHistory_delete"><a href="#">&times;</a></td>
+                        </tr>
+                    </table>
+                </li> -->
+            </ul>
+            <p id="clearHistory"><a href="#">清除歷史紀錄</a></p>
+        </div>
+    </div>
+
+    <footer id="footer" class="footer--full-width">
+        <div class="footer__container">
+            <img class="footer__img" src="img/BMICLogo-gray.png" alt="logo">
+        </div>
+    </footer>
+<script src="all.js"></script>
+</body>
+</html>
