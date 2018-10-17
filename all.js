@@ -2,7 +2,7 @@
 //Global variables
 var tall = document.querySelector('#tall');
 var weight = document.querySelector('#weight');
-var bmiCalculate = document.querySelector('#checkbmi');
+// var bmiCalculate = document.querySelector('#headerButton');
 var bmiTable = document.querySelector('.bmiHistory');
 var clear = document.querySelector('#clearHistory a');
 var headerButton = document.getElementById('headerButton');
@@ -169,7 +169,7 @@ function reloadBtn(e) {
     tall.value = '';
     weight.value = '';
     //clear input value
-    let bmiCalculate = document.querySelector('#checkbmi');
+    // let bmiCalculate = document.querySelector('#checkbmi');
     /*!important
     retarget original button's DOM
     If I don't do it, I can't add event listener to bmiCalculate again.
@@ -177,48 +177,52 @@ function reloadBtn(e) {
     可是我一開始var bmiCalculate不是已經存過了? 還是我更動DOM的關係，此值已被洗掉?
     */
     // console.log(bmiCalculate);
-    bmiCalculate.addEventListener('click', addData, false);
+    // bmiCalculate.addEventListener('click', addData, false);
     //add event listener to bmiCalculate again.
 }
 
 //All function and Data control
 
-function addData() {
-    numCheck();
-    //check the inputed element first
-    if (wrong == 'NaN'){
-        // console.log(wrong);
-        return;
+function addData(e) {
+    if (e.target.nodeName === 'INPUT' || e.target.nodeName === 'A' ) {
+        numCheck();
+        //check the inputed element first
+        if (wrong == 'NaN'){
+            // console.log(wrong);
+            return;
+        }
+        //If user's input is invalid, jump out of the function 
+        let bmiValue = addBmi();
+        //get BMI value
+        let timeValue = addTime();
+        //get time value
+        let judgeBmi = bmiLevel();
+        //judge and get the BMI string
+        let borderSet = borderCheck();
+        //get the border class name
+        buttonShift(bmiValue,judgeBmi,borderSet);
+        reloadButton.addEventListener('click', reloadBtn, false);
+        //add event listerer to reloadButton after button shift
+        let bmiRecord = {
+            bmiCheck: judgeBmi,
+            bmi: bmiValue,
+            inputWeight: weight.value,
+            inputTall: tall.value,
+            time: timeValue,
+            border: borderSet
+        };
+        //declare an object and insert all date into it
+        bmiData.push(bmiRecord);
+        //insert one whole object into BmiData array
+        localStorage.setItem('bmiStorage', JSON.stringify(bmiData));
+        /*transfer the array to string because localStorage only accepts string data
+          then set it into localStorage
+        */
+        updateList(bmiData);
+        //call the function to update list
+    }else {
+        return
     }
-    //If user's input is invalid, jump out of the function 
-    let bmiValue = addBmi();
-    //get BMI value
-    let timeValue = addTime();
-    //get time value
-    let judgeBmi = bmiLevel();
-    //judge and get the BMI string
-    let borderSet = borderCheck();
-    //get the border class name
-    buttonShift(bmiValue,judgeBmi,borderSet);
-    reloadButton.addEventListener('click', reloadBtn, false);
-    //add event listerer to reloadButton after button shift
-    let bmiRecord = {
-        bmiCheck: judgeBmi,
-        bmi: bmiValue,
-        inputWeight: weight.value,
-        inputTall: tall.value,
-        time: timeValue,
-        border: borderSet
-    };
-    //declare an object and insert all date into it
-    bmiData.push(bmiRecord);
-    //insert one whole object into BmiData array
-    localStorage.setItem('bmiStorage', JSON.stringify(bmiData));
-    /*transfer the array to string because localStorage only accepts string data
-      then set it into localStorage
-    */
-    updateList(bmiData);
-    //call the function to update list
 }
 
 //Delete whole list
@@ -260,7 +264,8 @@ function deleteTarget(e) {
 
 //EventListener
 
-bmiCalculate.addEventListener('click', addData, false);
+headerButton.addEventListener('click', addData, false);
+//this binds click event to all elements under #headerButton
 clear.addEventListener('click', deleteList, false);
 bmiTable.addEventListener('click', deleteTarget, false);
 updateList(bmiData);
