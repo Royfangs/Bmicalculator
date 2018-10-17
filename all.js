@@ -246,7 +246,7 @@ function deleteTarget(e) {
     if (e.target.nodeName !== 'A') {
         return;
     }
-    //if user don't click anchor, it will not work because it jump out of the function 
+    //if users don't click anchor, it will not work because it jump out of the function 
     let indexCheck = e.target.dataset.index;
     //get the index value
     // console.log(indexCheck);
