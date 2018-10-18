@@ -97,6 +97,10 @@ table {
       bottom: 40px;
       width: 130px;
       text-align: left; }
+      @media screen and (max-width: 375px) {
+        .header__container__col-4__afterBtn p:nth-child(4) {
+          left: 0;
+          bottom: -50px; } }
   .header__container__col-4__afterBtn a {
     display: inline-block;
     width: 100%;
@@ -249,6 +253,13 @@ table {
   height: 55px; }
 
 @media screen and (max-width: 768px) {
+  .header__container {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-flow: column wrap;
+    flex-flow: column wrap; } }
+
+@media screen and (max-width: 375px) {
   .header__container {
     -webkit-box-orient: vertical;
     -webkit-box-direction: normal;

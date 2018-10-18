@@ -107,6 +107,10 @@ table {
             bottom: 40px;
             width: 130px;
             text-align: left;
+            @include mobileS {
+                left: 0;
+                bottom: -50px;
+            }
         }
     }
     a {
@@ -311,6 +315,9 @@ table {
 
 .header__container {
     @include tablet {
+        flex-flow: column wrap;
+    }
+    @include mobileS {
         flex-flow: column wrap;
     }
 }
