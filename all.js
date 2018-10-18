@@ -1,4 +1,3 @@
-//Get the value of tall and weight
 //Global variables
 var tall = document.querySelector('#tall');
 var weight = document.querySelector('#weight');
@@ -10,36 +9,30 @@ var bmiData = JSON.parse(localStorage.getItem('bmiStorage')) || [];
 /*It will be empty array if there are no any values
 And if this array has values in it, it will be parsed into array form
 */
-var wrong = '';
-//wrong varibale is for checking input elements
-var reloadButton;
-//get the reloadButton's DOM after button shift
+//wrong varibale is for checking input elements and get the reloadButton's DOM after button shift
+var wrong = '', reloadButton;
+
 
 
 //Check if users input number correctly or not
 
 function numCheck(e){
+    //1.Get inputed tall and weight value
     let inputTall = tall.value / 100;
     let inputWeight = weight.value;
-    //get inputed tall and weight value
+    //2.If tall and weight value aren't number, number() will return 'NaN'
     let checkTall = Number(inputTall);
     let checkWeight = Number(inputWeight);
-    //if tall and weight value aren't number, number() will return 'NaN'
     if (isNaN(checkTall) || isNaN(checkWeight)) {
         alert('請輸入數字');
         wrong = 'NaN';
-        return wrong;
-        // equal to return 'NaN'
     }else if (inputTall == '' || inputWeight=='' || inputTall <= 0 || inputWeight<= 0) {
         alert('請填入身高與體重，數值不可為0或是負數');
         wrong = 'NaN';
-        return wrong;
-        // equal to return 'NaN'
     }else {
         wrong = '';
-        return wrong;
-    }
     // use isNaN() to see if tall and weight value are NaN or not
+    }return wrong;
 }
 
 
@@ -49,8 +42,8 @@ function addBmi() {
     let inputTall = tall.value / 100;
     let inputWeight = weight.value;
     let bmiResult = inputWeight / (inputTall * inputTall);
-    let finalBmi = bmiResult.toFixed(2);
     //Convert a number into a string, keeping only two decimals
+    let finalBmi = bmiResult.toFixed(2);
     return finalBmi;
 }
 
@@ -59,8 +52,8 @@ function addBmi() {
 
 function addTime(){
     let today = new Date();
-    let timeNow = today.getDate() + '-' + (today.getMonth() + 1) + '-' + today.getFullYear()
     //set date and create the format
+    let timeNow = today.getDate() + '-' + (today.getMonth() + 1) + '-' + today.getFullYear()
     return timeNow;
 }
 
@@ -68,10 +61,10 @@ function addTime(){
 //Judge and return BMI level value 
 
 function bmiLevel() {
-    let level = addBmi();
-    //Calculate and return BMI value first
+    //1. Calculate and return BMI value
+    const level = addBmi();
+    //2.let an empty variable and use if statement to judge which level it is 
     let judge = '';
-    //let an empty variable and use if statement to judge which level it is 
     if (level < 18.5) {
         judge = '過輕';
     } else if (level >= 18.5 && level < 24) {
@@ -117,8 +110,9 @@ function updateList(list) {
 //Judge and decide border color
 
 function borderCheck() {
+    //1.Call addBmi() and get return BMI value
     let level = addBmi();
-    //first it will call addBmi() and get return BMI value, then decide the border color class name
+    //2.Decide the border color class name
     let border = '';
     if (level < 18.5) {
         border = 'light';
@@ -155,27 +149,25 @@ function buttonShift(bmi,level,border) {
     //get the reloadButton's DOM after button shift
 }
 
-//reload button
+//Reload button
 
 function reloadBtn(e) {
+    //1.Stop the default behaviour
     e.preventDefault();
+    //2.Stop bubbling
     e.stopPropagation();
+    //3.Construct original button and insert to str
     let str = '';
     str = `
     <input type="button" id="checkbmi" class="header__container__col-4__resultBtn" value="看結果">
     `
-    //construct original button and insert to str
     headerButton.innerHTML = str;
+    //4.Reset input value
     tall.value = '';
     weight.value = '';
+
     //clear input value
     // let bmiCalculate = document.querySelector('#checkbmi');
-    /*!important
-    retarget original button's DOM
-    If I don't do it, I can't add event listener to bmiCalculate again.
-    *問題點2 這邊假設我不重複let bmiCalculate 去抓位置便沒有辦法重新綁定事件
-    可是我一開始var bmiCalculate不是已經存過了? 還是我更動DOM的關係，此值已被洗掉?
-    */
     // console.log(bmiCalculate);
     // bmiCalculate.addEventListener('click', addData, false);
     //add event listener to bmiCalculate again.
@@ -184,25 +176,26 @@ function reloadBtn(e) {
 //All function and Data control
 
 function addData(e) {
+    //1.Because I add eventlistener to this whole div id="headerButton", so I need to exclude ares I don't want to triger eventlistener
     if (e.target.nodeName === 'INPUT' || e.target.nodeName === 'A' ) {
+        //2.Check number is it's valid or not, if it's invalid, jump out of the function
         numCheck();
-        //check the inputed element first
         if (wrong == 'NaN'){
-            // console.log(wrong);
             return;
         }
-        //If user's input is invalid, jump out of the function 
+        //3.Get BMI value
         let bmiValue = addBmi();
-        //get BMI value
+        //4.Get time value
         let timeValue = addTime();
-        //get time value
+        //5.Judge and get the BMI level
         let judgeBmi = bmiLevel();
-        //judge and get the BMI string
+        //6.Get the border class name
         let borderSet = borderCheck();
-        //get the border class name
+        //7.Shift the button to show resule
         buttonShift(bmiValue,judgeBmi,borderSet);
+        //8.Add event listerer to reloadButton after button shifting
         reloadButton.addEventListener('click', reloadBtn, false);
-        //add event listerer to reloadButton after button shift
+        //9.Construc an object and insert all values I need
         let bmiRecord = {
             bmiCheck: judgeBmi,
             bmi: bmiValue,
@@ -211,62 +204,59 @@ function addData(e) {
             time: timeValue,
             border: borderSet
         };
-        //declare an object and insert all date into it
+        //10.Push an constructed object to bmiData array
         bmiData.push(bmiRecord);
-        //insert one whole object into BmiData array
+        //11.Transfer bmiData array to string because localStorage only accepts string data then set it into localStorage
         localStorage.setItem('bmiStorage', JSON.stringify(bmiData));
-        /*transfer the array to string because localStorage only accepts string data
-          then set it into localStorage
-        */
+        //12.Call the function to update list
         updateList(bmiData);
-        //call the function to update list
     }else {
+        //If user clicks other area, it won call any function
         return
     }
 }
 
-//Delete whole list
+//Delete the whole list
 
 function deleteList(e) {
+    //1.Stop the default behaviour
     e.preventDefault();
-    //stop the default behaviour
+    //2.Stop bubbing
     e.stopPropagation();
-    //it prevents the event from pbubbling up the DOM.
+    //3.Remove the whole localStorage item
     localStorage.removeItem('bmiStorage');
-    //remove localStorage item
+    //4.Update the array to empty array
     bmiData = [];
-    //update the array to empty array
+    //5.Update list
     updateList(bmiData);
-    //and update list
 }
 
 //Delete target li
 
 function deleteTarget(e) {
+    //1.Stop the default behaviour
     e.preventDefault();
-    //stop the default behaviour
+    //2.Stop bubbing
     e.stopPropagation();
-    //it prevents the event from pbubbling up the DOM.
+    //3.Because the eventlistener is added to the whole table, so I needs to exclude ares I don't want to triger eventlistener
     if (e.target.nodeName !== 'A') {
         return;
     }
-    //if users don't click anchor, it will not work because it jump out of the function 
+    //4.Get the data-index value which responds it's place in array
     let indexCheck = e.target.dataset.index;
-    //get the index value
     // console.log(indexCheck);
+    //5.Splice out target object
     bmiData.splice(indexCheck,1);
-    //splice out target object
+    //6.Transfer array to string and update the localStorage
     localStorage.setItem('bmiStorage', JSON.stringify(bmiData));
-    //transfer array to string and update the localStorage
+    //7.Update list
     updateList(bmiData);
-    //then update list
 }
 
 //EventListener
-
+//Binds click event to all elements under #headerButton
 headerButton.addEventListener('click', addData, false);
-//this binds click event to all elements under #headerButton
 clear.addEventListener('click', deleteList, false);
 bmiTable.addEventListener('click', deleteTarget, false);
+//Update list when load
 updateList(bmiData);
-//update list when load
