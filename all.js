@@ -9,7 +9,7 @@ var bmiData = JSON.parse(localStorage.getItem('bmiStorage')) || [];
 /*It will be empty array if there are no any values
 And if this array has values in it, it will be parsed into array form
 */
-//wrong varibale is for checking input elements and get the reloadButton's DOM after button shift
+//Wrong varibale is for checking input elements and get the reloadButton's DOM after button shift
 var wrong = '', reloadButton;
 
 
@@ -31,7 +31,7 @@ function numCheck(e){
         wrong = 'NaN';
     }else {
         wrong = '';
-    // use isNaN() to see if tall and weight value are NaN or not
+    // Use isNaN() to see if tall and weight value are NaN or not
     }return wrong;
 }
 
